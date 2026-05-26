@@ -7,7 +7,7 @@ import { getToken } from "@/lib/auth/storage";
 export default function LoginPage() {
   useEffect(() => {
     if (getToken()) {
-      window.location.href = "/dashboard";
+      window.location.href = "/dashboard/";
     }
   }, []);
 

@@ -55,6 +55,8 @@ jobs:
 
       - name: Build Next.js
         working-directory: frontend
+        env:
+          NEXT_PUBLIC_API_URL: https://life-os-platform.onrender.com/api
         run: npm run build
 
       - name: Initialisation Capacitor Android

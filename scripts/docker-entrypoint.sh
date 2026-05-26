@@ -25,6 +25,8 @@ log_ok "Dépendances installées"
 
 # ÉTAPE 2 — Build Next.js (export statique)
 log_step "Build Next.js en mode export statique..."
+export NEXT_PUBLIC_API_URL="${NEXT_PUBLIC_API_URL:-https://life-os-platform.onrender.com/api}"
+log_ok "API mobile : $NEXT_PUBLIC_API_URL"
 npm run build
 log_ok "Build Next.js terminé — dossier out/ généré"
 

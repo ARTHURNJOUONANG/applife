@@ -23,7 +23,7 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
     if (!tokenChecked || loading) return;
 
     if (!getToken() && !user) {
-      router.replace("/login");
+      router.replace("/login/");
     }
   }, [tokenChecked, loading, user, router]);
 

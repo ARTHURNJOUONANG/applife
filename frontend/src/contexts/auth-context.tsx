@@ -34,7 +34,7 @@ const AuthContext = createContext<AuthContextValue | null>(null);
 const AUTH_PATHS = ["/login", "/register"];
 
 function redirectToDashboard() {
-  window.location.replace("/dashboard");
+  window.location.replace("/dashboard/");
 }
 
 function buildUserFromToken(token: string, email?: string, name?: string): User | null {
@@ -168,7 +168,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const logout = useCallback(() => {
     clearToken();
     setUser(null);
-    window.location.href = "/login";
+    window.location.href = "/login/";
   }, []);
 
   const value = useMemo(
