@@ -37,7 +37,10 @@
     "testMatch": [
       "**/tests/**/*.test.js"
     ],
-    "runInBand": true,
+    "testPathIgnorePatterns": [
+      "/node_modules/",
+      "/tests/e2e/"
+    ],
     "forceExit": true,
     "detectOpenHandles": true
   }

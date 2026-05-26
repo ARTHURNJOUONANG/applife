@@ -83,20 +83,22 @@ app.use((err, req, res, next) => {
 
 const { execSync } = require('child_process')
 
-app.listen(PORT, async () => {
-  console.log(`✓ Serveur démarré sur le port ${PORT}`)
-  console.log(`✓ Environnement : ${process.env.NODE_ENV}`)
-  console.log(`✓ URL : http://localhost:${PORT}/api/health`)
+if (require.main === module) {
+  app.listen(PORT, async () => {
+    console.log(`✓ Serveur démarré sur le port ${PORT}`)
+    console.log(`✓ Environnement : ${process.env.NODE_ENV}`)
+    console.log(`✓ URL : http://localhost:${PORT}/api/health`)
 
-  if (process.env.NODE_ENV === 'production') {
-    try {
-      console.log('✓ Lancement des migrations Prisma...')
-      execSync('npx prisma migrate deploy', { stdio: 'inherit' })
-      console.log('✓ Migrations appliquées avec succès')
-    } catch (error) {
-      console.error('✗ Erreur lors des migrations:', error.message)
+    if (process.env.NODE_ENV === 'production') {
+      try {
+        console.log('✓ Lancement des migrations Prisma...')
+        execSync('npx prisma migrate deploy', { stdio: 'inherit' })
+        console.log('✓ Migrations appliquées avec succès')
+      } catch (error) {
+        console.error('✗ Erreur lors des migrations:', error.message)
+      }
     }
-  }
-})
+  })
+}
 
 module.exports = app
