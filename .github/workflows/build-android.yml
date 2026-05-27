@@ -34,17 +34,12 @@ jobs:
 
       - name: Installation Android command-line tools
         run: |
-          set -euo pipefail
           ANDROID_SDK_ROOT="${HOME}/android-sdk"
-          CMDLINE_TOOLS_VERSION="11076708"
-          CMDLINE_ZIP="/tmp/cmdline-tools.zip"
-
           mkdir -p "${ANDROID_SDK_ROOT}/cmdline-tools"
-          wget -q "https://dl.google.com/android/repository/commandlinetools-linux-${CMDLINE_TOOLS_VERSION}_latest.zip" -O "${CMDLINE_ZIP}"
-          unzip -q "${CMDLINE_ZIP}" -d /tmp
+          wget -q "https://dl.google.com/android/repository/commandlinetools-linux-11076708_latest.zip" -O /tmp/cmdline-tools.zip
+          unzip -q /tmp/cmdline-tools.zip -d /tmp
           rm -rf "${ANDROID_SDK_ROOT}/cmdline-tools/latest"
           mv /tmp/cmdline-tools "${ANDROID_SDK_ROOT}/cmdline-tools/latest"
-
           echo "ANDROID_SDK_ROOT=${ANDROID_SDK_ROOT}" >> "$GITHUB_ENV"
           echo "ANDROID_HOME=${ANDROID_SDK_ROOT}" >> "$GITHUB_ENV"
           echo "${ANDROID_SDK_ROOT}/cmdline-tools/latest/bin" >> "$GITHUB_PATH"
@@ -52,31 +47,16 @@ jobs:
 
       - name: Configuration Android SDK
         run: |
-          set -euo pipefail
-          "${ANDROID_SDK_ROOT}/cmdline-tools/latest/bin/sdkmanager" --version
-          # Avec pipefail, "yes | ... --licenses" peut retourner 141 (SIGPIPE) malgré succès.
-          # On neutralise ce faux négatif pour éviter un échec CI parasite.
-          yes | "${ANDROID_SDK_ROOT}/cmdline-tools/latest/bin/sdkmanager" --licenses > /dev/null || true
-          "${ANDROID_SDK_ROOT}/cmdline-tools/latest/bin/sdkmanager" \
-            "platform-tools" \
-            "platforms;android-34" \
-            "build-tools;34.0.0"
-
-      - name: Cache Gradle
-        uses: actions/cache@v4
-        with:
-          path: |
-            ~/.gradle/caches
-            ~/.gradle/wrapper
-          key: gradle-${{ runner.os }}-${{ hashFiles('app/android/**/gradle-wrapper.properties') }}
-          restore-keys: |
-            gradle-${{ runner.os }}-
+          SDKMANAGER="${ANDROID_SDK_ROOT}/cmdline-tools/latest/bin/sdkmanager"
+          "$SDKMANAGER" --version
+          yes | "$SDKMANAGER" --licenses || true
+          "$SDKMANAGER" "platform-tools" "platforms;android-34" "build-tools;34.0.0"
 
       - name: Installation des dépendances npm
         working-directory: app
         run: npm ci --include=dev
 
-      - name: Build Next.js
+      - name: Build Next.js (Capacitor)
         working-directory: app
         env:
           CAPACITOR_BUILD: "true"
@@ -86,21 +66,15 @@ jobs:
       - name: Initialisation Capacitor Android
         working-directory: app
         run: |
-          if [ ! -d "android" ]; then
-            npx cap add android
-          fi
+          if [ -d "android" ]; then rm -rf android; fi
+          npx cap add android
           npx cap sync android
-
-      - name: Permissions Gradle
-        working-directory: app/android
-        run: chmod +x gradlew
 
       - name: Compilation APK Debug
         working-directory: app/android
         run: |
-          ./gradlew assembleDebug \
-            --no-daemon \
-            -Dorg.gradle.jvmargs="-Xmx3g"
+          chmod +x gradlew
+          ./gradlew assembleDebug --no-daemon -Dorg.gradle.jvmargs="-Xmx3g"
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
@@ -127,4 +101,4 @@ jobs:
         run: |
           echo "## ❌ Build Android échoué" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
-          echo "Consultez les logs ci-dessus pour identifier l'erreur." >> $GITHUB_STEP_SUMMARY
+          echo "Vérifiez l'étape en erreur dans les logs (npm, cap, gradle)." >> $GITHUB_STEP_SUMMARY

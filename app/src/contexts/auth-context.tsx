@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import {
   createContext,
@@ -104,7 +104,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       const trimmed = token?.trim();
       if (!trimmed) {
         throw new ApiClientError(
-          "R├⌐ponse de connexion invalide : token manquant",
+          "Réponse de connexion invalide : token manquant",
           500,
         );
       }
@@ -131,7 +131,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         try {
           finalUser = await authApi.me();
         } catch {
-          /* /me optionnel ΓÇö on redirige quand m├¬me si le token est valide */
+          /* /me optionnel — on redirige quand même si le token est valide */
         }
       }
 
@@ -140,7 +140,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         setStoredUser(finalUser);
       }
 
-      // Toujours rediriger apr├¿s un token re├ºu (login API = 200)
+      // Toujours rediriger après un token reçu (login API = 200)
       redirectToDashboard();
     },
     [],

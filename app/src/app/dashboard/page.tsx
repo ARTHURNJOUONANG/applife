@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import type { CSSProperties } from "react";
 import { useEffect, useState } from "react";
@@ -25,14 +25,14 @@ export default function DashboardPage() {
   return (
     <div>
       <PageHeader
-        title={`Bonjour, ${user?.name ?? "utilisateur"} ≡ƒæï`}
-        description="Vue d'ensemble de votre journ├⌐e"
+        title={`Bonjour, ${user?.name ?? "utilisateur"} 👋`}
+        description="Vue d'ensemble de votre journée"
       />
 
       <div className="mb-6 grid gap-4 sm:grid-cols-3">
         {[
-          { title: "T├óches actives", value: tasks.length, color: "text-emerald-400", delay: "0.05s" },
-          { title: "Priorit├⌐ haute", value: highPriority, color: "text-amber-400", delay: "0.1s" },
+          { title: "Tâches actives", value: tasks.length, color: "text-emerald-400", delay: "0.05s" },
+          { title: "Priorité haute", value: highPriority, color: "text-amber-400", delay: "0.1s" },
           { title: "En cours", value: inProgress, color: "text-sky-400", delay: "0.15s" },
         ].map((stat) => (
           <Card
@@ -49,10 +49,10 @@ export default function DashboardPage() {
       </div>
 
       <div className="grid gap-6 lg:grid-cols-2">
-        <Card title="Acc├¿s rapide">
+        <Card title="Accès rapide">
           <div className="grid gap-2 sm:grid-cols-2">
             {[
-              { href: "/dashboard/tasks/", label: "G├⌐rer mes t├óches" },
+              { href: "/dashboard/tasks/", label: "Gérer mes tâches" },
               { href: "/dashboard/mood/", label: "Enregistrer mon humeur" },
               { href: "/dashboard/calendar/", label: "Voir mon agenda" },
               { href: "/dashboard/ai/", label: "Suggestions IA" },
@@ -72,7 +72,7 @@ export default function DashboardPage() {
         <Card title="Suggestions IA du jour">
           {suggestions.length === 0 ? (
             <p className="text-sm text-slate-400">
-              Aucune suggestion pour le moment. Le backend IA sera connect├⌐ prochainement.
+              Aucune suggestion pour le moment. Le backend IA sera connecté prochainement.
             </p>
           ) : (
             <ul className="space-y-3">

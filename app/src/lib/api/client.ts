@@ -1,4 +1,4 @@
-﻿import { getToken } from "@/lib/auth/storage";
+import { getToken } from "@/lib/auth/storage";
 import type { ApiError } from "@/types/api";
 
 const API_URL =

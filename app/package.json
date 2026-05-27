@@ -6,7 +6,6 @@
     "dev": "next dev",
     "build": "next build",
     "build:mobile": "node scripts/build-mobile.mjs",
-    "build:mobile": "node scripts/build-mobile.mjs",
     "start": "next start",
     "lint": "next lint"
   },

@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useAuth } from "@/contexts/auth-context";
 import { useTheme } from "@/contexts/theme-context";
@@ -8,13 +8,13 @@ import { AppLogo } from "@/components/layout/app-logo";
 import { Button } from "@/components/ui/button";
 
 const navItems = [
-  { href: "/dashboard/", label: "Tableau de bord", icon: "≡ƒÅá" },
-  { href: "/dashboard/tasks/", label: "T├óches", icon: "Γ£à" },
-  { href: "/dashboard/calendar/", label: "Agenda", icon: "≡ƒôà" },
-  { href: "/dashboard/goals/", label: "Objectifs", icon: "≡ƒÄ»" },
-  { href: "/dashboard/mood/", label: "Bien-├¬tre", icon: "≡ƒÆÜ" },
-  { href: "/dashboard/focus/", label: "Focus", icon: "ΓÅ▒∩╕Å" },
-  { href: "/dashboard/ai/", label: "IA", icon: "Γ£¿" },
+  { href: "/dashboard/", label: "Tableau de bord", icon: "🏠" },
+  { href: "/dashboard/tasks/", label: "Tâches", icon: "✅" },
+  { href: "/dashboard/calendar/", label: "Agenda", icon: "📅" },
+  { href: "/dashboard/goals/", label: "Objectifs", icon: "🎯" },
+  { href: "/dashboard/mood/", label: "Bien-être", icon: "💚" },
+  { href: "/dashboard/focus/", label: "Focus", icon: "⏱️" },
+  { href: "/dashboard/ai/", label: "IA", icon: "✨" },
 ];
 
 export function Sidebar() {
@@ -51,12 +51,12 @@ export function Sidebar() {
 
       <div className="theme-sidebar-footer mt-4 border-t pt-4">
         <Button variant="ghost" className="mb-2 w-full" onClick={toggleTheme}>
-          {theme === "dark" ? "ΓÿÇ∩╕Å Mode clair" : "≡ƒîÖ Mode sombre"}
+          {theme === "dark" ? "☀️ Mode clair" : "🌙 Mode sombre"}
         </Button>
         <p className="truncate px-2 text-sm font-medium theme-text">{user?.name}</p>
         <p className="truncate px-2 text-xs theme-muted">{user?.email}</p>
         <Button variant="ghost" className="mt-3 w-full" onClick={logout}>
-          D├⌐connexion
+          Déconnexion
         </Button>
       </div>
     </aside>
