@@ -54,7 +54,9 @@ jobs:
         run: |
           set -euo pipefail
           "${ANDROID_SDK_ROOT}/cmdline-tools/latest/bin/sdkmanager" --version
-          yes | "${ANDROID_SDK_ROOT}/cmdline-tools/latest/bin/sdkmanager" --licenses > /dev/null
+          # Avec pipefail, "yes | ... --licenses" peut retourner 141 (SIGPIPE) malgré succès.
+          # On neutralise ce faux négatif pour éviter un échec CI parasite.
+          yes | "${ANDROID_SDK_ROOT}/cmdline-tools/latest/bin/sdkmanager" --licenses > /dev/null || true
           "${ANDROID_SDK_ROOT}/cmdline-tools/latest/bin/sdkmanager" \
             "platform-tools" \
             "platforms;android-34" \
