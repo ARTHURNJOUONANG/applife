@@ -3,7 +3,7 @@
 import { useAuth } from "@/contexts/auth-context";
 import { useTheme } from "@/contexts/theme-context";
 import { useClientPathname } from "@/hooks/use-client-pathname";
-import { pathsMatch } from "@/lib/navigation";
+import { pathsMatch, toAppPath } from "@/lib/navigation";
 import { AppLogo } from "@/components/layout/app-logo";
 import { Button } from "@/components/ui/button";
 
@@ -34,7 +34,7 @@ export function Sidebar() {
           return (
             <a
               key={item.href}
-              href={item.href}
+              href={toAppPath(item.href)}
               style={{ animationDelay: `${index * 0.05}s` }}
               className={`nav-link animate-list-item flex items-center gap-3 rounded-lg px-3 py-2 text-sm ${
                 active

@@ -4,6 +4,7 @@ import type { CSSProperties } from "react";
 import { useEffect, useState } from "react";
 import { useAuth } from "@/contexts/auth-context";
 import { aiApi, tasksApi } from "@/lib/api/services";
+import { toAppPath } from "@/lib/navigation";
 import { PageHeader } from "@/components/layout/page-header";
 import { Card } from "@/components/ui/card";
 import type { AiSuggestion, Task } from "@/types/api";
@@ -58,7 +59,7 @@ export default function DashboardPage() {
             ].map((link, index) => (
               <a
                 key={link.href}
-                href={link.href}
+                href={toAppPath(link.href.replace(/\/$/, ""))}
                 style={{ animationDelay: `${index * 0.08}s` }}
                 className="animate-list-item rounded-lg border border-slate-800 bg-slate-950/60 px-4 py-3 text-sm text-slate-300 transition-all duration-300 hover:translate-x-1 hover:border-emerald-700 hover:bg-emerald-950/30 hover:text-white hover:shadow-lg hover:shadow-emerald-900/20"
               >

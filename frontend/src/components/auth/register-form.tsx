@@ -2,6 +2,7 @@
 
 import { FormEvent, useState } from "react";
 import { getAuthErrorMessage, useAuth } from "@/contexts/auth-context";
+import { toAppPath } from "@/lib/navigation";
 import { Alert } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -69,7 +70,7 @@ export function RegisterForm() {
 
       <p className="text-center text-sm text-slate-400">
         Déjà inscrit ?{" "}
-        <a href="/login/" className="text-emerald-400 hover:text-emerald-300">
+        <a href={toAppPath("/login")} className="text-emerald-400 hover:text-emerald-300">
           Se connecter
         </a>
       </p>
