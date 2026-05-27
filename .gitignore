@@ -78,6 +78,12 @@ web_modules/
 .next
 out
 
+# Capacitor generated (APK + Android source) — ne pas committer
+generated/
+
+# Android Studio / Capacitor local android folder (généré lors des builds)
+app/android/
+
 # Nuxt.js build / generate output
 .nuxt
 dist

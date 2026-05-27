@@ -1,0 +1,24 @@
+version: "3.8"
+
+services:
+  android-builder:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    volumes:
+      - ../app:/workspace/app
+      - ../generated:/workspace/generated
+      - android-npm-cache:/root/.npm
+      - android-gradle-cache:/root/.gradle
+    environment:
+      - APP_NAME=${APP_NAME:-Life OS}
+      - APP_ID=${APP_ID:-com.lifeos.app}
+      - NEXT_PUBLIC_API_URL=${NEXT_PUBLIC_API_URL:-https://life-os-platform.onrender.com/api}
+
+    # Le conteneur se termine dès que le build est terminé
+    # (et on récupère le code de sortie via docker compose)
+
+volumes:
+  android-npm-cache:
+  android-gradle-cache:
+
