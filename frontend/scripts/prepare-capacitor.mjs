@@ -15,10 +15,10 @@ const redirectHtml = `<!DOCTYPE html>
       try {
         var token = localStorage.getItem("life_os_token");
         var hasToken = token && token.indexOf("mock-jwt-") !== 0;
-        var target = hasToken ? "/dashboard/" : "/login/";
+        var target = hasToken ? "/dashboard/index.html" : "/login/index.html";
         window.location.replace(target);
       } catch (e) {
-        window.location.replace("/login/");
+        window.location.replace("/login/index.html");
       }
     })();
   </script>
