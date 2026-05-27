@@ -59,7 +59,7 @@ export default function DashboardPage() {
             ].map((link, index) => (
               <a
                 key={link.href}
-                href={toAppPath(link.href.replace(/\/$/, ""))}
+                href={toAppPath(link.href)}
                 style={{ animationDelay: `${index * 0.08}s` }}
                 className="animate-list-item rounded-lg border border-slate-800 bg-slate-950/60 px-4 py-3 text-sm text-slate-300 transition-all duration-300 hover:translate-x-1 hover:border-emerald-700 hover:bg-emerald-950/30 hover:text-white hover:shadow-lg hover:shadow-emerald-900/20"
               >

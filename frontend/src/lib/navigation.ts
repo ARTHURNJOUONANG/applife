@@ -1,24 +1,10 @@
-export function isCapacitorApp(): boolean {
-  if (typeof window === "undefined") return false;
-
-  return (
-    window.location.protocol === "capacitor:" ||
-    (window.location.protocol === "https:" && window.location.hostname === "localhost")
-  );
-}
-
 export function normalizePath(path: string) {
   if (!path || path === "/") return "/";
   return path.endsWith("/") ? path : `${path}/`;
 }
 
-/** Chemins relatifs pour Capacitor, absolus pour le web. */
 export function toAppPath(path: string): string {
-  const normalized = normalizePath(path);
-  if (!isCapacitorApp()) return normalized;
-
-  const trimmed = normalized.replace(/^\/+/, "");
-  return `./${trimmed}index.html`;
+  return normalizePath(path);
 }
 
 export function navigateTo(path: string) {
@@ -26,7 +12,7 @@ export function navigateTo(path: string) {
 }
 
 export function pathsMatch(current: string, target: string) {
-  const currentNorm = normalizePath(current).replace(/index\.html$/, "");
+  const currentNorm = normalizePath(current);
   const targetNorm = normalizePath(target);
-  return currentNorm === targetNorm || current.endsWith(targetNorm);
+  return currentNorm === targetNorm;
 }
