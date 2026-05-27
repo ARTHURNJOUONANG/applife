@@ -1,10 +1,10 @@
-"use client";
+﻿"use client";
 
 import type { CSSProperties } from "react";
 import { useEffect, useState } from "react";
-import Link from "next/link";
 import { useAuth } from "@/contexts/auth-context";
 import { aiApi, tasksApi } from "@/lib/api/services";
+import { toAppPath } from "@/lib/navigation";
 import { PageHeader } from "@/components/layout/page-header";
 import { Card } from "@/components/ui/card";
 import type { AiSuggestion, Task } from "@/types/api";
@@ -25,14 +25,14 @@ export default function DashboardPage() {
   return (
     <div>
       <PageHeader
-        title={`Bonjour, ${user?.name ?? "utilisateur"} 👋`}
-        description="Vue d'ensemble de votre journée"
+        title={`Bonjour, ${user?.name ?? "utilisateur"} ≡ƒæï`}
+        description="Vue d'ensemble de votre journ├⌐e"
       />
 
       <div className="mb-6 grid gap-4 sm:grid-cols-3">
         {[
-          { title: "Tâches actives", value: tasks.length, color: "text-emerald-400", delay: "0.05s" },
-          { title: "Priorité haute", value: highPriority, color: "text-amber-400", delay: "0.1s" },
+          { title: "T├óches actives", value: tasks.length, color: "text-emerald-400", delay: "0.05s" },
+          { title: "Priorit├⌐ haute", value: highPriority, color: "text-amber-400", delay: "0.1s" },
           { title: "En cours", value: inProgress, color: "text-sky-400", delay: "0.15s" },
         ].map((stat) => (
           <Card
@@ -49,22 +49,22 @@ export default function DashboardPage() {
       </div>
 
       <div className="grid gap-6 lg:grid-cols-2">
-        <Card title="Accès rapide">
+        <Card title="Acc├¿s rapide">
           <div className="grid gap-2 sm:grid-cols-2">
             {[
-              { href: "/dashboard/tasks", label: "Gérer mes tâches" },
-              { href: "/dashboard/mood", label: "Enregistrer mon humeur" },
-              { href: "/dashboard/calendar", label: "Voir mon agenda" },
-              { href: "/dashboard/ai", label: "Suggestions IA" },
+              { href: "/dashboard/tasks/", label: "G├⌐rer mes t├óches" },
+              { href: "/dashboard/mood/", label: "Enregistrer mon humeur" },
+              { href: "/dashboard/calendar/", label: "Voir mon agenda" },
+              { href: "/dashboard/ai/", label: "Suggestions IA" },
             ].map((link, index) => (
-              <Link
+              <a
                 key={link.href}
-                href={link.href}
+                href={toAppPath(link.href)}
                 style={{ animationDelay: `${index * 0.08}s` }}
                 className="animate-list-item rounded-lg border border-slate-800 bg-slate-950/60 px-4 py-3 text-sm text-slate-300 transition-all duration-300 hover:translate-x-1 hover:border-emerald-700 hover:bg-emerald-950/30 hover:text-white hover:shadow-lg hover:shadow-emerald-900/20"
               >
                 {link.label}
-              </Link>
+              </a>
             ))}
           </div>
         </Card>
@@ -72,7 +72,7 @@ export default function DashboardPage() {
         <Card title="Suggestions IA du jour">
           {suggestions.length === 0 ? (
             <p className="text-sm text-slate-400">
-              Aucune suggestion pour le moment. Le backend IA sera connecté prochainement.
+              Aucune suggestion pour le moment. Le backend IA sera connect├⌐ prochainement.
             </p>
           ) : (
             <ul className="space-y-3">

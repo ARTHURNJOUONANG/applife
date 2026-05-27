@@ -51,13 +51,14 @@ jobs:
 
       - name: Installation des dépendances npm
         working-directory: app
-        run: npm ci
+        run: npm ci --include=dev
 
       - name: Build Next.js
         working-directory: app
         env:
+          CAPACITOR_BUILD: "true"
           NEXT_PUBLIC_API_URL: https://life-os-platform.onrender.com/api
-        run: npm run build
+        run: npm run build:mobile
 
       - name: Initialisation Capacitor Android
         working-directory: app
@@ -98,3 +99,9 @@ jobs:
           echo "| Commit | ${{ github.sha }} |" >> $GITHUB_STEP_SUMMARY
           echo "| Branche | ${{ github.ref_name }} |" >> $GITHUB_STEP_SUMMARY
 
+      - name: Notification d'échec
+        if: failure()
+        run: |
+          echo "## ❌ Build Android échoué" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "Consultez les logs ci-dessus pour identifier l'erreur." >> $GITHUB_STEP_SUMMARY

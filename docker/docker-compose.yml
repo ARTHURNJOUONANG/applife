@@ -15,10 +15,6 @@ services:
       - APP_ID=${APP_ID:-com.lifeos.app}
       - NEXT_PUBLIC_API_URL=${NEXT_PUBLIC_API_URL:-https://life-os-platform.onrender.com/api}
 
-    # Le conteneur se termine dès que le build est terminé
-    # (et on récupère le code de sortie via docker compose)
-
 volumes:
   android-npm-cache:
   android-gradle-cache:
-

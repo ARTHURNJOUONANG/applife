@@ -2,6 +2,7 @@
 #
 # build-android.sh
 # Script principal — lancé depuis la machine hôte
+# Usage : ./scripts/build-android.sh
 #
 set -e
 
@@ -21,13 +22,11 @@ if ! docker info > /dev/null 2>&1; then
 fi
 echo "✓ Docker est actif"
 
-# Charger les variables d'environnement (pour docker-compose)
 if [ -f ".env" ]; then
   export $(grep -v '^#' .env | xargs)
   echo "✓ Variables .env chargées"
 fi
 
-# Dossiers de sortie
 mkdir -p generated/builds/apk
 mkdir -p generated/source/android
 
@@ -42,4 +41,3 @@ docker compose -f docker/docker-compose.yml up \
 
 echo ""
 echo "✅ Build terminé ! Votre APK est dans : generated/builds/apk/"
-

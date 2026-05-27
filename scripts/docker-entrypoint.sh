@@ -23,7 +23,10 @@ npm ci --prefer-offline 2>/dev/null || npm install
 log_ok "Dépendances installées"
 
 log_step "Build Next.js en mode export statique..."
-npm run build
+export CAPACITOR_BUILD=true
+export NEXT_PUBLIC_API_URL="${NEXT_PUBLIC_API_URL:-https://life-os-platform.onrender.com/api}"
+log_ok "API mobile : $NEXT_PUBLIC_API_URL"
+npm run build:mobile
 log_ok "Build Next.js terminé — dossier out/ généré"
 
 if [ ! -d "out" ]; then
@@ -35,7 +38,6 @@ if [ -d "android" ]; then
   log_warn "Ancien dossier android/ détecté, suppression..."
   rm -rf android
 fi
-
 npx cap add android
 log_ok "Plateforme Android ajoutée"
 
@@ -72,6 +74,5 @@ echo -e "${GREEN}  BUILD ANDROID TERMINÉ AVEC SUCCÈS${NC}"
 echo -e "${GREEN}════════════════════════════════════════${NC}"
 echo -e "  APK     : generated/builds/apk/app-debug.apk"
 echo -e "  Taille  : $APK_SIZE"
-echo -e "  Source  : generated/source/"
+echo -e "  Source  : generated/source/android/"
 echo -e "${GREEN}════════════════════════════════════════${NC}"
-

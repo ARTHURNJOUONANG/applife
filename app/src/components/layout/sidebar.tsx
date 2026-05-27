@@ -1,24 +1,24 @@
-"use client";
+﻿"use client";
 
-import Link from "next/link";
-import { usePathname } from "next/navigation";
 import { useAuth } from "@/contexts/auth-context";
 import { useTheme } from "@/contexts/theme-context";
+import { useClientPathname } from "@/hooks/use-client-pathname";
+import { pathsMatch, toAppPath } from "@/lib/navigation";
 import { AppLogo } from "@/components/layout/app-logo";
 import { Button } from "@/components/ui/button";
 
 const navItems = [
-  { href: "/dashboard", label: "Tableau de bord", icon: "🏠" },
-  { href: "/dashboard/tasks", label: "Tâches", icon: "✅" },
-  { href: "/dashboard/calendar", label: "Agenda", icon: "📅" },
-  { href: "/dashboard/goals", label: "Objectifs", icon: "🎯" },
-  { href: "/dashboard/mood", label: "Bien-être", icon: "💚" },
-  { href: "/dashboard/focus", label: "Focus", icon: "⏱️" },
-  { href: "/dashboard/ai", label: "IA", icon: "✨" },
+  { href: "/dashboard/", label: "Tableau de bord", icon: "≡ƒÅá" },
+  { href: "/dashboard/tasks/", label: "T├óches", icon: "Γ£à" },
+  { href: "/dashboard/calendar/", label: "Agenda", icon: "≡ƒôà" },
+  { href: "/dashboard/goals/", label: "Objectifs", icon: "≡ƒÄ»" },
+  { href: "/dashboard/mood/", label: "Bien-├¬tre", icon: "≡ƒÆÜ" },
+  { href: "/dashboard/focus/", label: "Focus", icon: "ΓÅ▒∩╕Å" },
+  { href: "/dashboard/ai/", label: "IA", icon: "Γ£¿" },
 ];
 
 export function Sidebar() {
-  const pathname = usePathname();
+  const pathname = useClientPathname();
   const { user, logout } = useAuth();
   const { theme, toggleTheme } = useTheme();
 
@@ -30,11 +30,11 @@ export function Sidebar() {
 
       <nav className="flex-1 space-y-1">
         {navItems.map((item, index) => {
-          const active = pathname === item.href;
+          const active = pathsMatch(pathname, item.href);
           return (
-            <Link
+            <a
               key={item.href}
-              href={item.href}
+              href={toAppPath(item.href)}
               style={{ animationDelay: `${index * 0.05}s` }}
               className={`nav-link animate-list-item flex items-center gap-3 rounded-lg px-3 py-2 text-sm ${
                 active
@@ -44,19 +44,19 @@ export function Sidebar() {
             >
               <span className="transition-transform duration-300 group-hover:scale-110">{item.icon}</span>
               {item.label}
-            </Link>
+            </a>
           );
         })}
       </nav>
 
       <div className="theme-sidebar-footer mt-4 border-t pt-4">
         <Button variant="ghost" className="mb-2 w-full" onClick={toggleTheme}>
-          {theme === "dark" ? "☀️ Mode clair" : "🌙 Mode sombre"}
+          {theme === "dark" ? "ΓÿÇ∩╕Å Mode clair" : "≡ƒîÖ Mode sombre"}
         </Button>
         <p className="truncate px-2 text-sm font-medium theme-text">{user?.name}</p>
         <p className="truncate px-2 text-xs theme-muted">{user?.email}</p>
         <Button variant="ghost" className="mt-3 w-full" onClick={logout}>
-          Déconnexion
+          D├⌐connexion
         </Button>
       </div>
     </aside>

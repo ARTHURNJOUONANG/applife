@@ -33,13 +33,15 @@
     "supertest": "^7.2.2"
   },
   "jest": {
-  "testEnvironment": "node",
-  "testMatch": [
-    "**/tests/**/*.test.js",
-    "!**/tests/e2e/**"
-  ],
-  "runInBand": true,
-  "forceExit": true,
-  "detectOpenHandles": true
-}
+    "testEnvironment": "node",
+    "testMatch": [
+      "**/tests/**/*.test.js"
+    ],
+    "testPathIgnorePatterns": [
+      "/node_modules/",
+      "/tests/e2e/"
+    ],
+    "forceExit": true,
+    "detectOpenHandles": true
+  }
 }

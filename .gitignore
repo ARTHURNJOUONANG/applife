@@ -69,6 +69,18 @@ web_modules/
 .env
 .env.*
 !.env.example
+.env.local
+
+# Capacitor / build Android (atelier Keyce)
+frontend/node_modules/
+frontend/.next/
+frontend/android/
+generated/
+*.iml
+.gradle/
+local.properties
+.idea/
+*.keystore
 
 # parcel-bundler cache (https://parceljs.org/)
 .cache
@@ -78,11 +90,17 @@ web_modules/
 .next
 out
 
-# Capacitor generated (APK + Android source) — ne pas committer
-generated/
-
-# Android Studio / Capacitor local android folder (généré lors des builds)
+# Capacitor / build Android
+app/node_modules/
+app/.next/
+app/out/
 app/android/
+generated/
+*.iml
+.gradle/
+local.properties
+.idea/
+*.keystore
 
 # Nuxt.js build / generate output
 .nuxt

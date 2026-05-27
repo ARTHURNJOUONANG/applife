@@ -1,8 +1,8 @@
 "use client";
 
 import { FormEvent, useState } from "react";
-import Link from "next/link";
 import { getAuthErrorMessage, useAuth } from "@/contexts/auth-context";
+import { toAppPath } from "@/lib/navigation";
 import { Alert } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -62,9 +62,9 @@ export function LoginForm() {
 
       <p className="text-center text-sm text-slate-400">
         Pas encore de compte ?{" "}
-        <Link href="/register" className="text-emerald-400 hover:text-emerald-300">
+        <a href={toAppPath("/register")} className="text-emerald-400 hover:text-emerald-300">
           Créer un compte
-        </Link>
+        </a>
       </p>
     </form>
   );

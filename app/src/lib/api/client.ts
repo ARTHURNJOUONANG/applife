@@ -1,7 +1,9 @@
-import { getToken } from "@/lib/auth/storage";
+﻿import { getToken } from "@/lib/auth/storage";
 import type { ApiError } from "@/types/api";
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:5000/api";
+const API_URL =
+  process.env.NEXT_PUBLIC_API_URL ??
+  "https://life-os-platform.onrender.com/api";
 
 export class ApiClientError extends Error {
   status: number;

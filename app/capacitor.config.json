@@ -1,9 +1,0 @@
-{
-  "appId": "com.lifeos.app",
-  "appName": "Life OS",
-  "webDir": "out",
-  "server": {
-    "androidScheme": "https"
-  }
-}
-

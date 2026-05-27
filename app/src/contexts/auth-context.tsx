@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import {
   createContext,
@@ -8,7 +8,8 @@ import {
   useMemo,
   useState,
 } from "react";
-import { usePathname } from "next/navigation";
+import { useClientPathname } from "@/hooks/use-client-pathname";
+import { navigateTo } from "@/lib/navigation";
 import { authApi } from "@/lib/api/services";
 import { ApiClientError } from "@/lib/api/client";
 import { getUserIdFromToken } from "@/lib/auth/jwt";
@@ -34,7 +35,7 @@ const AuthContext = createContext<AuthContextValue | null>(null);
 const AUTH_PATHS = ["/login", "/register"];
 
 function redirectToDashboard() {
-  window.location.replace("/dashboard");
+  navigateTo("/dashboard");
 }
 
 function buildUserFromToken(token: string, email?: string, name?: string): User | null {
@@ -52,9 +53,10 @@ function buildUserFromToken(token: string, email?: string, name?: string): User 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
-  const pathname = usePathname();
+  const pathname = useClientPathname();
 
-  const isAuthPage = AUTH_PATHS.some((p) => pathname?.startsWith(p));
+  const isAuthPage =
+    !pathname || AUTH_PATHS.some((p) => pathname.startsWith(p));
 
   const loadUser = useCallback(async () => {
     const token = getToken();
@@ -102,7 +104,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       const trimmed = token?.trim();
       if (!trimmed) {
         throw new ApiClientError(
-          "Réponse de connexion invalide : token manquant",
+          "R├⌐ponse de connexion invalide : token manquant",
           500,
         );
       }
@@ -129,7 +131,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         try {
           finalUser = await authApi.me();
         } catch {
-          /* /me optionnel — on redirige quand même si le token est valide */
+          /* /me optionnel ΓÇö on redirige quand m├¬me si le token est valide */
         }
       }
 
@@ -138,7 +140,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         setStoredUser(finalUser);
       }
 
-      // Toujours rediriger après un token reçu (login API = 200)
+      // Toujours rediriger apr├¿s un token re├ºu (login API = 200)
       redirectToDashboard();
     },
     [],
@@ -168,7 +170,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const logout = useCallback(() => {
     clearToken();
     setUser(null);
-    window.location.href = "/login";
+    navigateTo("/login");
   }, []);
 
   const value = useMemo(
