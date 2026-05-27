@@ -22,14 +22,29 @@ const PORT = process.env.PORT || 5000
 // Helmet ajoute des headers de sécurité automatiquement
 app.use(helmet())
 
-// Cors autorise le frontend à communiquer avec ce backend
+// CORS: web + mobile Capacitor (Android WebView utilise souvent https://localhost)
+const allowedOrigins = [
+  'http://localhost:3000',
+  'http://localhost:3001',
+  'https://life-os-platform.vercel.app',
+  'https://localhost',
+  'http://localhost',
+  'capacitor://localhost',
+  'ionic://localhost',
+]
+
+if (process.env.FRONTEND_URL) {
+  allowedOrigins.push(process.env.FRONTEND_URL)
+}
+
 app.use(cors({
-  origin: [
-    'http://localhost:3000',
-    'http://localhost:3001',
-    'https://life-os-platform.vercel.app'
-  ],
-  credentials: true
+  origin(origin, callback) {
+    // Certaines requêtes (curl/health checks/clients natifs) n'ont pas d'Origin.
+    if (!origin) return callback(null, true)
+    if (allowedOrigins.includes(origin)) return callback(null, true)
+    return callback(new Error(`Origin non autorisée par CORS: ${origin}`))
+  },
+  credentials: true,
 }))
 
 // Permet à Express de lire le JSON envoyé par le frontend
