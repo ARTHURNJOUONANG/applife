@@ -1,16 +1,15 @@
 "use client";
 
-import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useAuth } from "@/contexts/auth-context";
 import { getStoredUser, getToken } from "@/lib/auth/storage";
+import { navigateTo } from "@/lib/navigation";
 import { Sidebar } from "@/components/layout/sidebar";
 import { PageTransition } from "@/components/layout/page-transition";
 import { LoadingSpinner } from "@/components/ui/loading-spinner";
 
 export function DashboardShell({ children }: { children: React.ReactNode }) {
   const { user, loading } = useAuth();
-  const router = useRouter();
   const [tokenChecked, setTokenChecked] = useState(false);
   const [hasToken, setHasToken] = useState(false);
 
@@ -23,9 +22,9 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
     if (!tokenChecked || loading) return;
 
     if (!getToken() && !user) {
-      router.replace("/login/");
+      navigateTo("/login");
     }
-  }, [tokenChecked, loading, user, router]);
+  }, [tokenChecked, loading, user]);
 
   const cachedUser = getStoredUser();
   const effectiveUser = user ?? cachedUser;

@@ -1,7 +1,6 @@
 "use client";
 
 import { FormEvent, useState } from "react";
-import Link from "next/link";
 import { getAuthErrorMessage, useAuth } from "@/contexts/auth-context";
 import { Alert } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
@@ -70,9 +69,9 @@ export function RegisterForm() {
 
       <p className="text-center text-sm text-slate-400">
         Déjà inscrit ?{" "}
-        <Link href="/login" className="text-emerald-400 hover:text-emerald-300">
+        <a href="/login/" className="text-emerald-400 hover:text-emerald-300">
           Se connecter
-        </Link>
+        </a>
       </p>
     </form>
   );

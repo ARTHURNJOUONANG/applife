@@ -2,7 +2,6 @@
 
 import type { CSSProperties } from "react";
 import { useEffect, useState } from "react";
-import Link from "next/link";
 import { useAuth } from "@/contexts/auth-context";
 import { aiApi, tasksApi } from "@/lib/api/services";
 import { PageHeader } from "@/components/layout/page-header";
@@ -52,19 +51,19 @@ export default function DashboardPage() {
         <Card title="Accès rapide">
           <div className="grid gap-2 sm:grid-cols-2">
             {[
-              { href: "/dashboard/tasks", label: "Gérer mes tâches" },
-              { href: "/dashboard/mood", label: "Enregistrer mon humeur" },
-              { href: "/dashboard/calendar", label: "Voir mon agenda" },
-              { href: "/dashboard/ai", label: "Suggestions IA" },
+              { href: "/dashboard/tasks/", label: "Gérer mes tâches" },
+              { href: "/dashboard/mood/", label: "Enregistrer mon humeur" },
+              { href: "/dashboard/calendar/", label: "Voir mon agenda" },
+              { href: "/dashboard/ai/", label: "Suggestions IA" },
             ].map((link, index) => (
-              <Link
+              <a
                 key={link.href}
                 href={link.href}
                 style={{ animationDelay: `${index * 0.08}s` }}
                 className="animate-list-item rounded-lg border border-slate-800 bg-slate-950/60 px-4 py-3 text-sm text-slate-300 transition-all duration-300 hover:translate-x-1 hover:border-emerald-700 hover:bg-emerald-950/30 hover:text-white hover:shadow-lg hover:shadow-emerald-900/20"
               >
                 {link.label}
-              </Link>
+              </a>
             ))}
           </div>
         </Card>

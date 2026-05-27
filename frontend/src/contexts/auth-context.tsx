@@ -8,7 +8,8 @@ import {
   useMemo,
   useState,
 } from "react";
-import { usePathname } from "next/navigation";
+import { useClientPathname } from "@/hooks/use-client-pathname";
+import { navigateTo } from "@/lib/navigation";
 import { authApi } from "@/lib/api/services";
 import { ApiClientError } from "@/lib/api/client";
 import { getUserIdFromToken } from "@/lib/auth/jwt";
@@ -34,7 +35,7 @@ const AuthContext = createContext<AuthContextValue | null>(null);
 const AUTH_PATHS = ["/login", "/register"];
 
 function redirectToDashboard() {
-  window.location.replace("/dashboard/");
+  navigateTo("/dashboard");
 }
 
 function buildUserFromToken(token: string, email?: string, name?: string): User | null {
@@ -52,9 +53,10 @@ function buildUserFromToken(token: string, email?: string, name?: string): User 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
-  const pathname = usePathname();
+  const pathname = useClientPathname();
 
-  const isAuthPage = AUTH_PATHS.some((p) => pathname?.startsWith(p));
+  const isAuthPage =
+    !pathname || AUTH_PATHS.some((p) => pathname.startsWith(p));
 
   const loadUser = useCallback(async () => {
     const token = getToken();
@@ -168,7 +170,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const logout = useCallback(() => {
     clearToken();
     setUser(null);
-    window.location.href = "/login/";
+    navigateTo("/login");
   }, []);
 
   const value = useMemo(

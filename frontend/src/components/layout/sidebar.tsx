@@ -1,24 +1,24 @@
 "use client";
 
-import Link from "next/link";
-import { usePathname } from "next/navigation";
 import { useAuth } from "@/contexts/auth-context";
 import { useTheme } from "@/contexts/theme-context";
+import { useClientPathname } from "@/hooks/use-client-pathname";
+import { pathsMatch } from "@/lib/navigation";
 import { AppLogo } from "@/components/layout/app-logo";
 import { Button } from "@/components/ui/button";
 
 const navItems = [
-  { href: "/dashboard", label: "Tableau de bord", icon: "🏠" },
-  { href: "/dashboard/tasks", label: "Tâches", icon: "✅" },
-  { href: "/dashboard/calendar", label: "Agenda", icon: "📅" },
-  { href: "/dashboard/goals", label: "Objectifs", icon: "🎯" },
-  { href: "/dashboard/mood", label: "Bien-être", icon: "💚" },
-  { href: "/dashboard/focus", label: "Focus", icon: "⏱️" },
-  { href: "/dashboard/ai", label: "IA", icon: "✨" },
+  { href: "/dashboard/", label: "Tableau de bord", icon: "🏠" },
+  { href: "/dashboard/tasks/", label: "Tâches", icon: "✅" },
+  { href: "/dashboard/calendar/", label: "Agenda", icon: "📅" },
+  { href: "/dashboard/goals/", label: "Objectifs", icon: "🎯" },
+  { href: "/dashboard/mood/", label: "Bien-être", icon: "💚" },
+  { href: "/dashboard/focus/", label: "Focus", icon: "⏱️" },
+  { href: "/dashboard/ai/", label: "IA", icon: "✨" },
 ];
 
 export function Sidebar() {
-  const pathname = usePathname();
+  const pathname = useClientPathname();
   const { user, logout } = useAuth();
   const { theme, toggleTheme } = useTheme();
 
@@ -30,9 +30,9 @@ export function Sidebar() {
 
       <nav className="flex-1 space-y-1">
         {navItems.map((item, index) => {
-          const active = pathname === item.href;
+          const active = pathsMatch(pathname, item.href);
           return (
-            <Link
+            <a
               key={item.href}
               href={item.href}
               style={{ animationDelay: `${index * 0.05}s` }}
@@ -44,7 +44,7 @@ export function Sidebar() {
             >
               <span className="transition-transform duration-300 group-hover:scale-110">{item.icon}</span>
               {item.label}
-            </Link>
+            </a>
           );
         })}
       </nav>

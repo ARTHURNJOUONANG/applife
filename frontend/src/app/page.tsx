@@ -2,12 +2,12 @@
 
 import { useEffect } from "react";
 import { getToken } from "@/lib/auth/storage";
+import { navigateTo } from "@/lib/navigation";
 import { LoadingSpinner } from "@/components/ui/loading-spinner";
 
 export default function HomePage() {
   useEffect(() => {
-    const target = getToken() ? "/dashboard/" : "/login/";
-    window.location.replace(target);
+    navigateTo(getToken() ? "/dashboard" : "/login");
   }, []);
 
   return <LoadingSpinner label="Chargement..." />;
